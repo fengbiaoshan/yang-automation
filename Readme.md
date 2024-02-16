@@ -24,6 +24,8 @@
 ```
 
 手机端，使用了appium链接模拟器或者真实机，兼容ios和android，但是需要appium的环境，比较繁琐。简单使用安卓手机或者模拟器的话可以修改mobile_controller.py里的方法为python adb调试代码。
+涉及到图片识别，分辨率注意 为 720p （720*1280）
+其他分辨率可能需要重截图片及修改代码识别范围
 
 ## 使用
 在python环境中执行yang_processor.py

@@ -40,7 +40,9 @@ def click(location):
 	last_click_loc = location
 	
 	global driver
-	TouchAction(driver).tap(None, int(location[0]), int(location[1])).perform()
+	# TouchAction(driver).tap(None, int(location[0]), int(location[1])).perform()
+	driver.tap([(int(location[0]), int(location[1]))])
+	
 	time.sleep(0.5)
 
 def check_if_accidents(accidents):
