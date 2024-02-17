@@ -84,6 +84,15 @@ def try_match_muti(template_paths,threshold,reshot = True,min_dist = 10,scope = 
 
 	return result
 
+def try_matcharray_muti(singleitemtemplates,threshold,reshot = True,min_dist = 10,scope = None):
+
+	if(reshot):
+		mobile_screenshot()
+		
+	result = image_processor.match_templatesarray_muti(settings.screenshot_path,singleitemtemplates,threshold,min_dist,scope)
+
+	return result
+
 def wait_till_match_any(template_paths,thresholds,return_center,max_time,step_time,accidents=None,scope = None,except_locs = None):
 	
 	print("AdbController: Start to wait till match screenshot by any "+str(template_paths)+" for up to "+str(max_time)+" seconds  ....")

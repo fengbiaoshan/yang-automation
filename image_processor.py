@@ -95,6 +95,46 @@ def match_template_muti(target_path,template_paths,threshold = 0.05,min_dist = 1
 	return final_results
 
 
+#return format:[(x1,y1),(x2,y2),....]
+#scope format:(y0,y1,x0,x1)
+def match_templatesarray_muti(target_path,templates,threshold = 0.05,min_dist = 10,scope = None):
+
+	target = cv2.imread(target_path)
+
+	if(scope != None):
+		target = target[scope[0]:scope[1],scope[2]:scope[3]]
+
+	all_matched_postions = [[],[]]
+
+	for template in templates:
+		theight, twidth = template.shape[:2]
+
+		result = cv2.matchTemplate(target,template,cv2.TM_SQDIFF_NORMED)
+
+	    #return [[y0,y1,y2...][x0,x1,x2...]]
+		matched_postions = numpy.where(result < threshold)
+		# print(str(matched_postions[0]))
+		all_matched_postions[0].extend(matched_postions[0])
+		# print(str(all_matched_postions[0]))
+		all_matched_postions[1].extend(matched_postions[1])
+
+	final_results = []
+	for i in range(0,len(all_matched_postions[0])):
+		abandon_it = False
+		for i2 in range(i+1,len(all_matched_postions[0])):
+			dist = abs(all_matched_postions[0][i] - all_matched_postions[0][i2])+abs(all_matched_postions[1][i] - all_matched_postions[1][i2])
+			# print("dist of {} and {} is {}".format(i,i2,dist))
+			if(dist < min_dist):
+				abandon_it = True
+				break
+		if(not abandon_it):
+			if(scope != None):
+				final_results.append((all_matched_postions[1][i] + scope[2],all_matched_postions[0][i] + scope[0]))
+			else:
+				final_results.append((all_matched_postions[1][i],all_matched_postions[0][i]))
+	return final_results
+
+
 # def easyocr_read(target_path,print_debug = True,scope = None):
 
 # 	reader = easyocr.Reader(['ch_sim','en'], gpu = False)
