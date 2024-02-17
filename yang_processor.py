@@ -27,7 +27,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		templates.append([])
 		for i2 in range(0,aim_size_detail[i]):
 			templates[i].append(cv2.imread(r"template_images\level_{}_aim_{}_{}.png".format(level,i,i2+1)))
-		result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 48,scope = (960,1120,0,696))
+		result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 5,scope = (960,1120,0,696))
 		already_count[i] = len(result)
 		already_sum = already_sum + len(result)
 	# finish reset already_count and already_sum
@@ -42,8 +42,11 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 
 	failed = False
 
-	while(True):
+	decision_step = 0
 
+	while(True):
+		decision_step += 1
+		
 		print("")
 		print("")
 		print("already_count:"+str(already_count))
@@ -55,9 +58,15 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		time.sleep(1)
 		mobile_controller.mobile_screenshot()
 
-		
-		
 
+		if (decision_step % 6 == 0):
+			already_count = numpy.zeros(aim_size,int)
+			already_sum = 0
+			for i in range(0,aim_size):
+				result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 5,scope = (960,1120,0,696))
+				already_count[i] = len(result)
+				already_sum = already_sum + len(result)
+		
 		#台面各个物种的数量
 		match_results = dict()
 		
@@ -75,7 +84,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		for i in rng:
 			print("AdbController: Start to try_match_muti by " + str(i))
 			if((i in match_results)== False):
-				match_results[i] = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 48,scope = (0,960,0,696))
+				match_results[i] = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 45,scope = (0,960,0,696))
 
 			print("find n:"+str(len(match_results[i])))
 			needn = 3 - already_count[i]
@@ -91,6 +100,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 					mobile_controller.click(match_results[i][i2])
 					total_click = total_click + 1
 					# time.sleep(1)
+				time.sleep(1.3)	
 
 		if(success3):
 			print("success3")
@@ -111,9 +121,9 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 				result = mobile_controller.wait_to_match_and_click(
 							[r"template_images\resend2.png"],[0.01],True,10,1)
 			else:#看视屏
-				time.sleep(30)
+				time.sleep(20)
 				result = mobile_controller.wait_to_match_and_click(
-					[r"template_images\close.png"],[0.01],True,30,1)
+					[r"template_images\close.png"],[0.1],True,30,1)
 				# if(result != "success"):
 				# 	mobile_controller.click((655,68))
 
@@ -149,9 +159,9 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 				result = mobile_controller.wait_to_match_and_click(
 							[r"template_images\resend2.png"],[0.01],True,10,1)
 			else:#看视屏
-				time.sleep(30)
+				time.sleep(20)
 				result = mobile_controller.wait_to_match_and_click(
-					[r"template_images\close.png"],[0.01],True,30,1)
+					[r"template_images\close.png"],[0.1],True,30,1)
 				# if(result != "success"):
 				# 	mobile_controller.click((655,68))
 
@@ -163,7 +173,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 			already_count = numpy.zeros(aim_size,int)
 			already_sum = 0
 			for i in range(0,aim_size):
-				result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 48,scope = (960,1120,0,696))
+				result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 5,scope = (960,1120,0,696))
 				already_count[i] = len(result)
 				already_sum = already_sum + len(result)
 
@@ -178,7 +188,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		for i in rng:
 			print("AdbController: Start to try_match_muti by " + str(i))
 			if((i in match_results)== False):
-				match_results[i] = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 48,scope = (0,880,0,696))
+				match_results[i] = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 5,scope = (0,880,0,696))
 
 			if(already_count[i] > 0):
 				print("find n:"+str(len(match_results[i])))
@@ -204,7 +214,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		for i in rng:
 			print("AdbController: Start to try_match_muti by " + str(i))
 			if((i in match_results)== False):
-				match_results[i] = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 48,scope = (0,880,0,696))
+				match_results[i] = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 5,scope = (0,880,0,696))
 			print("find n:"+str(len(match_results[i])))
 			if(len(match_results[i]) >= 2):
 				success1 = True
@@ -227,7 +237,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		for i in rng:
 			print("AdbController: Start to try_match_muti by " + str(i))
 			if((i in match_results)== False):
-				match_results[i] = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 48,scope = (0,880,0,696))
+				match_results[i] = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 5,scope = (0,880,0,696))
 			print("find n:"+str(len(match_results[i])))
 			if(len(match_results[i]) >= 1):
 				success0 = True
@@ -259,9 +269,9 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 					result = mobile_controller.wait_to_match_and_click(
 								[r"template_images\resend2.png"],[0.01],True,10,1)
 				else:#看视屏
-					time.sleep(30)
+					time.sleep(20)
 					result = mobile_controller.wait_to_match_and_click(
-						[r"template_images\close.png"],[0.01],True,30,3)
+						[r"template_images\close.png"],[0.1],True,30,3)
 					# if(result != "success"):
 					# 	mobile_controller.click((655,68))
 
@@ -272,7 +282,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 				already_count = numpy.zeros(aim_size,int)
 				already_sum = 0
 				for i in range(0,aim_size):
-					result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 48,scope = (960,1120,0,696))
+					result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 5,scope = (960,1120,0,696))
 					already_count[i] = len(result)
 					already_sum = already_sum + len(result)
 				# finish reset already_count and already_sum
@@ -320,9 +330,9 @@ def auto_yang():
 		if(auto_yang_level(level = 2,
 			aim_size = 16,
 			aim_size_detail = 
-			[2,2,2,2,2,#0~4
-			 2,2,2,2,2,#5~9
-			 2,2,2,2,2,#10~14
+			[3,3,3,3,4,#0~4
+			 3,3,3,3,3,#5~9
+			 3,3,3,3,3,#10~14
 			 2         #15
 			 ]) == -1):
 			continue
