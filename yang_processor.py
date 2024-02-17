@@ -291,8 +291,11 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 			
 		# 	return -1
 
-		mobile_controller.wait_to_match_and_click(
+		result = mobile_controller.wait_to_match_and_click(
 					[r"template_images\restart.png",r"template_images\restart3.png"],[0.01,0.01],True,1,0.1)
+		if (result == "success"):
+			time.sleep(8)
+			return -1
 
 		# 检查需要跳过
 		result = mobile_controller.wait_to_match_and_click(
