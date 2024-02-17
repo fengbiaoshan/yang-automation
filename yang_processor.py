@@ -12,6 +12,15 @@ import mobile_controller
 max_click = 0
 test_time = 0
 
+def watch_video():
+	time.sleep(20)
+	result = mobile_controller.wait_till_match_any(
+				[r"template_images\alget.png"],[0.1],True,10,1)
+	result = mobile_controller.wait_to_match_and_click(
+		[r"template_images\close.png"],[0.15],True,30,1)
+	if (result != "success"):
+		mobile_controller.click((619,52))
+
 
 def auto_yang_level(level,aim_size,aim_size_detail):
 
@@ -55,11 +64,11 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		print("max_click:"+str(max_click))
 		print("test_time:"+str(test_time))
 
-		time.sleep(1)
+		time.sleep(0.2)
 		mobile_controller.mobile_screenshot()
 
 
-		if (decision_step % 6 == 0):
+		if (decision_step % 3 == 0):
 			already_count = numpy.zeros(aim_size,int)
 			already_sum = 0
 			for i in range(0,aim_size):
@@ -121,30 +130,11 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 				result = mobile_controller.wait_to_match_and_click(
 							[r"template_images\resend2.png"],[0.01],True,10,1)
 			else:#看视屏
-				time.sleep(20)
-				result = mobile_controller.wait_till_match_any(
-							[r"template_images\alget.png"],[0.1],True,10,1)
-				result = mobile_controller.wait_to_match_and_click(
-					[r"template_images\close.png"],[0.15],True,30,1)
-				if (result != "success"):
-					mobile_controller.click((619,52))
+				watch_video()
 
 			time.sleep(3)
 			mobile_controller.click((580,1200))
-			time.sleep(3)
-			continue
-
-			# reset already_count and already_sum
-			time.sleep(3)
-			mobile_controller.mobile_screenshot()
-			already_count = numpy.zeros(aim_size,int)
-			already_sum = 0
-			for i in range(0,aim_size):
-				
-				result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 48,scope = (960,1120,0,696))
-				already_count[i] = len(result)
-				already_sum = already_sum + len(result)
-			# finish reset already_count and already_sum
+			time.sleep(10)
 			continue
 
 		#查是否需要使用移出道具
@@ -161,13 +151,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 				result = mobile_controller.wait_to_match_and_click(
 							[r"template_images\resend2.png"],[0.01],True,10,1)
 			else:#看视屏
-				time.sleep(20)
-				result = mobile_controller.wait_till_match_any(
-							[r"template_images\alget.png"],[0.1],True,10,1)
-				result = mobile_controller.wait_to_match_and_click(
-						[r"template_images\close.png"],[0.15],True,30,1)
-				if (result != "success"):
-					mobile_controller.click((619,52))
+				watch_video()
 
 			time.sleep(3)
 			mobile_controller.click((140,1200))
@@ -273,13 +257,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 					result = mobile_controller.wait_to_match_and_click(
 								[r"template_images\resend2.png"],[0.01],True,10,1)
 				else:#看视屏
-					time.sleep(20)
-					result = mobile_controller.wait_till_match_any(
-							[r"template_images\alget.png"],[0.1],True,10,1)
-					result = mobile_controller.wait_to_match_and_click(
-							[r"template_images\close.png"],[0.15],True,30,1)
-					if (result != "success"):
-						mobile_controller.click((619,52))
+					watch_video()
 
 
 				# reset already_count and already_sum
