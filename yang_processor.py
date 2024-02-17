@@ -17,9 +17,17 @@ def watch_video():
 	result = mobile_controller.wait_till_match_any(
 				[r"template_images\alget.png"],[0.1],True,10,1)
 	result = mobile_controller.wait_to_match_and_click(
-		[r"template_images\close.png"],[0.15],True,30,1)
+		[r"template_images\close.png"],[0.15],True,10,1)
 	if (result != "success"):
-		mobile_controller.click((619,52))
+		## 到其他页面了
+		mobile_controller.wait_to_match_and_click(
+							[r"template_images\endmenu.png"],[0.1],True,3,0.5)
+		result = mobile_controller.wait_till_match_any(
+				[r"template_images\alget.png"],[0.1],True,10,1)
+		result = mobile_controller.wait_to_match_and_click(
+			[r"template_images\close.png"],[0.15],True,10,1)
+		# raise Exception
+		# mobile_controller.click((645,65))
 
 
 def auto_yang_level(level,aim_size,aim_size_detail):
@@ -164,8 +172,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 				result = mobile_controller.try_matcharray_muti(templates[i],0.03,reshot = False,min_dist = 45,scope = (960,1120,0,696))
 				already_count[i] = len(result)
 				already_sum = already_sum + len(result)
-
-		match_results = dict()
+			continue
 
 		#找桌面上是否有和手牌相同的，有的话点一个到手牌
 		print("")
@@ -245,9 +252,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		result = mobile_controller.try_match_muti([r"template_images\failed.png",r"template_images\failed_2.png"],0.01,reshot = False,min_dist = 10,scope = None)
 		if(len(result) >= 1):
 			failed = True
- 
 			if(rebirth_available):#还能续命
-
 				rebirth_available = False
 				mobile_controller.click((360,780))
 				result = mobile_controller.wait_to_match_and_click(
@@ -300,6 +305,13 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 		# 检查需要跳过
 		result = mobile_controller.wait_to_match_and_click(
 								[r"template_images\skip.png"],[0.01],True,1,0.1)
+		
+		# result = mobile_controller.wait_till_match_any(
+		# 		[r"template_images\yangjiemian.png"],[0.01],True,2,1)
+		# if (result == None):
+		# 	## 到其他页面了
+		# 	mobile_controller.wait_to_match_and_click(
+		# 						[r"template_images\endmenu.png"],[0.1],True,3,0.5)
 
 		print("Nothing found")
 		continue
