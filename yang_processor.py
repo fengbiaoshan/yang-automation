@@ -100,7 +100,7 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 					mobile_controller.click(match_results[i][i2])
 					total_click = total_click + 1
 					# time.sleep(1)
-				time.sleep(1.3)	
+				time.sleep(0.5)	
 
 		if(success3):
 			print("success3")
@@ -123,9 +123,11 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 			else:#看视屏
 				time.sleep(20)
 				result = mobile_controller.wait_till_match_any(
-							[r"template_images\alget.png"],[0.08],True,10,1)
+							[r"template_images\alget.png"],[0.1],True,10,1)
 				result = mobile_controller.wait_to_match_and_click(
-					[r"template_images\close.png"],[0.1],True,30,1)
+					[r"template_images\close.png"],[0.15],True,30,1)
+				if (result != "success"):
+					mobile_controller.click((619,52))
 
 			time.sleep(3)
 			mobile_controller.click((580,1200))
@@ -161,10 +163,11 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 			else:#看视屏
 				time.sleep(20)
 				result = mobile_controller.wait_till_match_any(
-							[r"template_images\alget.png"],[0.08],True,10,1)
-
+							[r"template_images\alget.png"],[0.1],True,10,1)
 				result = mobile_controller.wait_to_match_and_click(
-						[r"template_images\close.png"],[0.1],True,30,1)
+						[r"template_images\close.png"],[0.15],True,30,1)
+				if (result != "success"):
+					mobile_controller.click((619,52))
 
 			time.sleep(3)
 			mobile_controller.click((140,1200))
@@ -272,10 +275,11 @@ def auto_yang_level(level,aim_size,aim_size_detail):
 				else:#看视屏
 					time.sleep(20)
 					result = mobile_controller.wait_till_match_any(
-							[r"template_images\alget.png"],[0.08],True,10,1)
-
+							[r"template_images\alget.png"],[0.1],True,10,1)
 					result = mobile_controller.wait_to_match_and_click(
-							[r"template_images\close.png"],[0.1],True,30,1)
+							[r"template_images\close.png"],[0.15],True,30,1)
+					if (result != "success"):
+						mobile_controller.click((619,52))
 
 
 				# reset already_count and already_sum
